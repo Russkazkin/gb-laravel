@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\NewsSeeder;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -42,11 +43,15 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $news = collect(NewsSeeder::NEWS_LIST)->where('category_id', $id);
+        return view('category.category', [
+            'category' => CategorySeeder::CATEGORY_LIST[$id],
+            'news' => collect(NewsSeeder::NEWS_LIST)->where('category_id', $id),
+        ]);
     }
 
     /**
