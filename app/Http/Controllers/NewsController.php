@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Database\Seeders\CategorySeeder;
 use Database\Seeders\NewsSeeder;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('category.index', ['categories' => CategorySeeder::CATEGORY_LIST]);
+        //
     }
 
     /**
@@ -42,16 +41,12 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        $news = collect(NewsSeeder::NEWS_LIST)->where('category_id', $id);
-        return view('category.show', [
-            'category' => CategorySeeder::CATEGORY_LIST[$id],
-            'news' => collect(NewsSeeder::NEWS_LIST)->where('category_id', $id),
-        ]);
+        return view('news.show', ['news' => NewsSeeder::NEWS_LIST[$id]]);
     }
 
     /**

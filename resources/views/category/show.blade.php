@@ -19,7 +19,7 @@
                         <div class="p-8">
                             <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-black lg:text-3xl title-font"> {{ $item['title'] }} </h1>
                             <p class="mx-auto text-base font-medium leading-relaxed text-blueGray-700 ">{{ Str::limit($item['content'], 100) }}</p>
-                            <a href="#" class="inline-flex items-center mt-4 font-semibold text-blue-600 lg:mb-0 hover:text-black " title="read more"> Read More » </a>
+                            <a href="{{ route('news.show', ['news' => $item['id']]) }}" class="inline-flex items-center mt-4 font-semibold text-blue-600 lg:mb-0 hover:text-black " title="read more"> Читать » </a>
                         </div>
                     </div>
                 @empty
