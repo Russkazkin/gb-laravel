@@ -27,6 +27,5 @@ mix.js('resources/js/app.js', 'public/js')
     })
     .browserSync({
         proxy: 'gb-laravel.skazkin',
-        cors: true,
-
+        open: false,
     });
