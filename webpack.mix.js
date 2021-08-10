@@ -12,9 +12,20 @@ const tailwindcss = require("tailwindcss");
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').sourceMaps()
+mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/admin.js', 'public/js')
+    .sourceMaps()
     .sass('resources/sass/app.sass', 'public/css')
+    .sass('resources/sass/admin.sass', 'public/css')
+    .copy(
+        'node_modules/@fortawesome/fontawesome-free/webfonts',
+        'public/webfonts'
+    )
     .options({
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.config.js') ],
+    })
+    .browserSync({
+        proxy: 'gb-laravel.skazkin',
+        open: false,
     });
