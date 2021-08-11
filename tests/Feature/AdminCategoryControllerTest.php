@@ -2,15 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\Admin\CategoryController;
 use Tests\TestCase;
 
 class AdminCategoryControllerTest extends TestCase
 {
     /**
      * @test
-     * @see NewsController::index()
+     * @see CategoryController::index()
      */
     public function index(): void
     {
@@ -18,7 +17,7 @@ class AdminCategoryControllerTest extends TestCase
     }
     /**
      * @test
-     * @see NewsController::create()
+     * @see CategoryController::create()
      */
     public function create(): void
     {
