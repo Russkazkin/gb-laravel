@@ -10,11 +10,11 @@
                 @method('POST')
                 <div class="">
                     <label class="block text-sm text-gray-600" for="title">Заголовок</label>
-                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="title" name="title" type="text" required="" placeholder="Введите заголовок" aria-label="Title">
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="title" name="title" type="text" value="{{ old('title') }}" required="" placeholder="Введите заголовок" aria-label="Title">
                 </div>
                 <div class="mt-2">
                     <label class=" block text-sm text-gray-600" for="content">Контент</label>
-                    <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded" id="content" name="content" rows="6" required="" placeholder="Контент новости" aria-label="Content"></textarea>
+                    <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded" id="content" name="content" rows="6" required="" placeholder="Контент новости" aria-label="Content">{{ old('content') }}</textarea>
                 </div>
                 <div class="mt-4">
                     <label class=" block text-sm text-gray-600" for="category_id">Категория</label>
