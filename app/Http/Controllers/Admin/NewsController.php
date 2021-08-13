@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\NewsSeeder;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('admin.news.create', ['categories' => CategorySeeder::CATEGORY_LIST]);
     }
 
     /**
@@ -36,7 +37,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json($request->all());
     }
 
     /**
