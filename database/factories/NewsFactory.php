@@ -18,11 +18,14 @@ class NewsFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     * @throws \Exception
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence(random_int(1, 3)),
+            'content' => $this->faker->paragraph(random_int(1, 5)),
+            'image' => $this->faker->imageUrl(),
         ];
     }
 }

@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\News;
+use App\Models\User;
+use Database\Factories\NewsFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -10,9 +14,16 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      *
      * @return void
+     * @throws \Exception
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $categories = Category::factory(5)->create();
+        User::factory(50)->create()->each(function (User $user){
+            $user->news()->saveMany(News::factory(3)->make());
+        });
+        News::all()->each(function (News $news) {
+            $news->categories()->sync(Category::all()->random(random_int(1, 4)));
+        });
     }
 }
