@@ -75,4 +75,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(News::class);
     }
+    public function sources(): HasMany
+    {
+        return $this->hasMany(Source::class);
+    }
 }
