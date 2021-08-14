@@ -17,11 +17,12 @@
                 </thead>
                 <tbody class="text-gray-700">
                 @forelse($categories as $item)
+                    @php /** @var \App\Models\Category $item */ @endphp
                     <tr>
-                        <td class="text-left py-3 px-4">{{ $item['id'] }}</td>
-                        <td class="text-left py-3 px-4">{{ $item['name'] }}</td>
-                        <td class="text-left py-3 px-4">{{ \Illuminate\Support\Str::limit($item['description'], 40) }}</td>
-                        <td class="text-left py-3 px-4">{{ now()->translatedFormat('d M Y H:i') }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->id }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->name }}</td>
+                        <td class="text-left py-3 px-4">{{ \Illuminate\Support\Str::limit($item->description, 40) }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->created_at->translatedFormat('d M Y') }}</td>
                         <td class="text-left py-3 px-4">кнопки</td>
                     </tr>
                 @empty

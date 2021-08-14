@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Database\Seeders\CategorySeeder;
+use App\Models\Category;
+use App\Models\News;
 use Database\Seeders\NewsSeeder;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', ['news' => NewsSeeder::NEWS_LIST]);
+        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->get()]);
     }
 
     /**
@@ -26,7 +27,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create', ['categories' => CategorySeeder::CATEGORY_LIST]);
+        return view('admin.news.create', ['categories' => Category::all()]);
     }
 
     /**

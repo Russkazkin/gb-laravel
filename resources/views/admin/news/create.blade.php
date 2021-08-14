@@ -17,11 +17,11 @@
                     <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded" id="content" name="content" rows="6" required="" placeholder="Контент новости" aria-label="Content">{{ old('content') }}</textarea>
                 </div>
                 <div class="mt-4">
-                    <label class=" block text-sm text-gray-600" for="category_id">Категория</label>
-                    <select name="category_id" id="category_id" class="w-full px-4 py-2 mt-2 text-base text-blueGray-500 bg-gray-200 transition duration-500 ease-in-out transform border border-transparent rounded-lg appearance-none bg-blueGray-100 focus:border-blue-500 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
+                    <label class=" block text-sm text-gray-600" for="category">Категория</label>
+                    <select name="category[]" id="category" multiple class="w-full px-4 py-2 mt-2 text-base text-blueGray-500 bg-gray-200 transition duration-500 ease-in-out transform border border-transparent rounded-lg appearance-none bg-blueGray-100 focus:border-blue-500 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2">
                         @forelse($categories as $category)
-                        <option class="block mb-4 text-xs font-bold tracking-wide text-blueGray-500 uppercase " value="{{$category['id']}}">
-                            {{ $category['name'] }}
+                        <option class="block mb-4 text-xs font-bold tracking-wide text-blueGray-500 uppercase " value="{{$category->id}}">
+                            {{ $category->name }}
                         </option>
                         @empty
                         <option class="block mb-4 text-xs font-bold tracking-wide text-blueGray-500 uppercase " value="{{ null }}">Пусто</option>

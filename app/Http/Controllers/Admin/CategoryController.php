@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Database\Seeders\CategorySeeder;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.category.index', ['categories' => CategorySeeder::CATEGORY_LIST]);
+        return view('admin.category.index', ['categories' => Category::all()]);
     }
 
     /**
