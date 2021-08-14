@@ -11,10 +11,16 @@ class CreateSourcesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
+
+            $table->string('url')->comment('Source URL');
+            $table->text('description')->comment('Source description');
+
+            $table->foreignId('user_id')->constrained();
+
             $table->timestamps();
         });
     }
@@ -24,8 +30,12 @@ class CreateSourcesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
+        Schema::table('sources', function (Blueprint  $table) {
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('sources');
     }
 }
