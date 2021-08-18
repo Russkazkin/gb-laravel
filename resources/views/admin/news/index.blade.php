@@ -12,16 +12,21 @@
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Заголовок</th>
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Текст</th>
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Дата</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Категория</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Автор</th>
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Действия</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-700">
                 @forelse($news as $item)
+                    @php /** @var \App\Models\News $item */ @endphp
                     <tr>
-                        <td class="text-left py-3 px-4">{{ $item['id'] }}</td>
-                        <td class="text-left py-3 px-4">{{ $item['title'] }}</td>
-                        <td class="text-left py-3 px-4">{{ \Illuminate\Support\Str::limit($item['content'], 40) }}</td>
-                        <td class="text-left py-3 px-4">{{ now()->translatedFormat('d M Y H:i') }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->id }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->title }}</td>
+                        <td class="text-left py-3 px-4">{{ \Illuminate\Support\Str::limit($item->content, 40) }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->created_at->translatedFormat('d M Y') }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->categories->pluck('name')->join(' | ') }}</td>
+                        <td class="text-left py-3 px-4">{{ $item->user->name }}</td>
                         <td class="text-left py-3 px-4">кнопки</td>
                     </tr>
                 @empty
