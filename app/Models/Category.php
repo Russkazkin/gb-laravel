@@ -30,6 +30,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+
     public function news(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphedByMany(News::class, 'categoryable');
