@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\News;
 use App\Models\User;
 use Database\Seeders\NewsSeeder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -35,7 +36,7 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -94,11 +95,12 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(News $news): RedirectResponse
     {
-        //
+        $news->delete();
+        return redirect()->route('admin.news.index')->with('success', 'Новость удалена.');
     }
 }
