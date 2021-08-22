@@ -4,7 +4,7 @@
         <p class="text-xl pb-3 flex items-center">
             <i class="fas fa-list mr-3"></i> Новости
         </p>
-        <div class="bg-white overflow-auto">
+        <div class="bg-white overflow-auto mb-2">
             <table class="min-w-full bg-white">
                 <thead class="bg-gray-800 text-white">
                 <tr>
@@ -35,5 +35,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $news->links() }}
     </div>
 @endsection

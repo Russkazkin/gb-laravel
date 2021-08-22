@@ -18,7 +18,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->get()]);
+        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->simplePaginate(10)]);
     }
 
     /**
