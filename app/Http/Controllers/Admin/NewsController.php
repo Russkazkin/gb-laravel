@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\User;
 use Database\Seeders\NewsSeeder;
 use Illuminate\Http\Request;
 
@@ -34,11 +35,26 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        return response()->json($request->all());
+        $data = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'categories' => 'required|array|exists:categories,id',
+            'image' => 'sometimes|string'
+        ]);
+        $news = News::create([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'image' => $data['image'] ?? 'static/placeholder.png',
+            'user_id' => User::all()->random()->id,
+        ]);
+
+        $news->categories()->sync($data['categories']);
+
+        return redirect()->route('admin.news.index')->with('success', 'Новость успешно добавлена');
     }
 
     /**

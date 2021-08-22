@@ -43,6 +43,8 @@ class News extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'content', 'image', 'user_id'];
+
     public function categories(): MorphToMany
     {
         return $this->morphToMany(Category::class, 'categoryable');

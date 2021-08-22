@@ -73,9 +73,5 @@
                 </div>
             </div>
         </div>
-
-        <div class="alert alert-danger">
-
-        </div>
     @endif
 </div>
