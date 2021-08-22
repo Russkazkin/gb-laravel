@@ -19,7 +19,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->simplePaginate(10)]);
+        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->orderBy('id')->simplePaginate(10)]);
     }
 
     /**
@@ -72,24 +72,39 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+        return view('admin.news.edit', ['news' => $news, 'categories' => Category::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'categories' => 'required|array|exists:categories,id',
+            'image' => 'sometimes|string'
+        ]);
+
+        $news->update([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'image' => $data['image'] ?? 'static/placeholder.png',
+        ]);
+
+        $news->categories()->sync($data['categories']);
+
+        return redirect()->route('admin.news.index')->with('success', 'Новость успешно обновлена');
     }
 
     /**
