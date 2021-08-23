@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoryCreateRequest;
+use App\Http\Requests\Admin\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,19 +34,13 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CategoryCreateRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CategoryCreateRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string'
-        ]);
-
-        Category::create($data);
-
-        return redirect()->route('admin.category.index');
+        Category::create($request->validated());
+        return redirect()->route('admin.category.index')->with('success', 'Категория создана');
     }
 
     /**
@@ -72,13 +68,13 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param CategoryUpdateRequest $request
      * @param Category $category
      * @return RedirectResponse
      */
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(CategoryUpdateRequest $request, Category $category): RedirectResponse
     {
-        $category->update($request->only(['name', 'description']));
+        $category->update($request->validated());
         return redirect()->route('admin.category.index')->with('success', 'Категория отредактирована');
     }
 
