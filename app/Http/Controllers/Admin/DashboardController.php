@@ -58,7 +58,7 @@ class DashboardController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        dd($user);
     }
 
     /**
