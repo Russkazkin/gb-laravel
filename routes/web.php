@@ -13,7 +13,7 @@ Route::get('/', [StaticPageController::class, 'welcome'])->name('home');
 Route::resource('category', CategoryController::class);
 Route::resource('news', NewsController::class);
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function () {
     Route::get('/', AdminController::class)->name('index');
     Route::resource('news', AdminNewsController::class);
     Route::resource('category', AdminCategoryController::class);
