@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\User;
 use Database\Seeders\NewsSeeder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -17,7 +19,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->get()]);
+        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->orderBy('id')->simplePaginate(10)]);
     }
 
     /**
@@ -34,11 +36,26 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        return response()->json($request->all());
+        $data = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'categories' => 'required|array|exists:categories,id',
+            'image' => 'sometimes|string'
+        ]);
+        $news = News::create([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'image' => $data['image'] ?? 'static/placeholder.png',
+            'user_id' => User::all()->random()->id,
+        ]);
+
+        $news->categories()->sync($data['categories']);
+
+        return redirect()->route('admin.news.index')->with('success', 'Новость успешно добавлена');
     }
 
     /**
@@ -55,34 +72,50 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+        return view('admin.news.edit', ['news' => $news, 'categories' => Category::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'categories' => 'required|array|exists:categories,id',
+            'image' => 'sometimes|string'
+        ]);
+
+        $news->update([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'image' => $data['image'] ?? 'static/placeholder.png',
+        ]);
+
+        $news->categories()->sync($data['categories']);
+
+        return redirect()->route('admin.news.index')->with('success', 'Новость успешно обновлена');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(News $news): RedirectResponse
     {
-        //
+        $news->delete();
+        return redirect()->route('admin.news.index')->with('success', 'Новость удалена.');
     }
 }
