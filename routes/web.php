@@ -18,3 +18,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('news', AdminNewsController::class);
     Route::resource('category', AdminCategoryController::class);
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
