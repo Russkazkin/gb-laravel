@@ -41,7 +41,7 @@ class AddRolesToUsersTable extends Migration
     public function down(): void
     {
         if ($super = User::whereName('super')->first()) {
-            $super->delete();
+            $super->forceDelete();
         }
         Schema::table('users', function (Blueprint $table) {
             $table->dropSoftDeletes();
