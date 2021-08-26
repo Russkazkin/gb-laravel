@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-<div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+    <x-admin.errors></x-admin.errors>
+    <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
         <p class="text-xl pb-6 flex items-center">
             <i class="fas fa-list mr-3"></i> Создать категорию
         </p>

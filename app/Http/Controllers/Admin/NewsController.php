@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\NewsCreateRequest;
+use App\Http\Requests\Admin\NewsUpdateRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\User;
@@ -19,7 +21,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->orderBy('id')->simplePaginate(10)]);
+        return view('admin.news.index', ['news' => News::with(['categories', 'user'])->latest()->simplePaginate(10)]);
     }
 
     /**
@@ -35,23 +37,15 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param NewsCreateRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(NewsCreateRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'categories' => 'required|array|exists:categories,id',
-            'image' => 'sometimes|string'
-        ]);
-        $news = News::create([
-            'title' => $data['title'],
-            'content' => $data['content'],
-            'image' => $data['image'] ?? 'static/placeholder.png',
-            'user_id' => User::all()->random()->id,
-        ]);
+        $data = $request->validated();
+        $data['user_id'] = User::all()->random()->id;
+        $data['image'] = $data['image'] ?? 'static/placeholder.png';
+        $news = News::create($data);
 
         $news->categories()->sync($data['categories']);
 
@@ -83,24 +77,15 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param NewsUpdateRequest $request
      * @param News $news
      * @return RedirectResponse
      */
-    public function update(Request $request, News $news): RedirectResponse
+    public function update(NewsUpdateRequest $request, News $news): RedirectResponse
     {
-        $data = $request->validate([
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'categories' => 'required|array|exists:categories,id',
-            'image' => 'sometimes|string'
-        ]);
+        $data = $request->validated();
 
-        $news->update([
-            'title' => $data['title'],
-            'content' => $data['content'],
-            'image' => $data['image'] ?? 'static/placeholder.png',
-        ]);
+        $news->update($data);
 
         $news->categories()->sync($data['categories']);
 
