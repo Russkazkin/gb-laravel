@@ -16,6 +16,7 @@ class SocialService implements SocialContract
         if ($currentUser) {
             $currentUser->name = $user->getName();
             $currentUser->avatar =$user->getAvatar();
+            $currentUser->save();
         } else {
             $currentUser = UserModel::create([
                 'name' => $user->getName(),

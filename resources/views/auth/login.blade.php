@@ -53,5 +53,6 @@
             </div>
         </form>
         <a href="{{ route('auth.redirect', ['social' => 'vkontakte']) }}">Авторизоваться через VK</a>
+        <a href="{{ route('auth.redirect', ['social' => 'github']) }}">Авторизоваться через GitHub</a>
     </x-auth-card>
 </x-guest-layout>
