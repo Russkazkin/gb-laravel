@@ -17,6 +17,8 @@ class AddRolesToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('is_admin')->default(false)->after('email')->comment('Админ');
             $table->boolean('is_super')->default(false)->after('is_admin')->comment('Супер-админ');
+            $table->string('avatar')->nullable()->after('email')->comment('Аватар');
+            $table->string('password')->nullable()->change();
             $table->softDeletes();
         });
 
@@ -47,6 +49,7 @@ class AddRolesToUsersTable extends Migration
             $table->dropSoftDeletes();
             $table->dropColumn('is_god');
             $table->dropColumn('is_super');
+            $table->dropColumn('avatar');
         });
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 });
 
 require __DIR__.'/auth.php';
+
+Route::group(['middleware' => 'guest', 'prefix' => 'auth', 'as' => 'auth.'], function() {
+    Route::get('/redirect/{social}', [SocialController::class, 'redirect'])->name('redirect');
+    Route::get('/callback/{social}', [SocialController::class, 'callback'])->name('callback');
+});
