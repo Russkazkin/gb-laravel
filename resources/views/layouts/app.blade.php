@@ -22,7 +22,7 @@
 <body class="bg-gray-200 text-gray-800 antialiased font-sans">
 <div id="app" class="flex flex-col min-h-screen">
     <header>
-        <div class="container items-center">
+        <div class="container items-center mx-auto">
             <div class="text-blueGray-700 transition duration-500 ease-in-out transform bg-white border rounded-lg ">
                 <div class="flex flex-col flex-wrap p-5 mx-auto md:items-center md:flex-row">
                     <a href="/" class="pr-2 lg:pr-8 lg:px-6 focus:outline-none">
@@ -56,7 +56,7 @@
     <main class="flex-grow">
         @yield('content')
     </main>
-    <div class="container items-center">
+    <div class="container items-center mx-auto">
         <footer class="text-blueGray-700 transition duration-500 ease-in-out transform bg-white border rounded-lg ">
             <div class="flex flex-col flex-wrap p-5 mx-auto md:items-center md:flex-row">
                 <a href="/" class="pr-2 lg:pr-8 lg:px-6 focus:outline-none">
