@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Contracts\ParserContract;
 use App\Contracts\SocialContract;
+use App\Services\ParserService;
 use App\Services\SocialService;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(ParserContract::class, ParserService::class);
         $this->app->bind(SocialContract::class, SocialService::class);
     }
 
