@@ -22,6 +22,10 @@
             <i class="fas fa-table mr-3"></i>
             Категории
         </a>
+        <a href="{{ route('admin.source.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-download mr-3"></i>
+            Источники
+        </a>
         @endif
         @if(Auth::user()->isSuper())
         <a href="{{ route('admin.user.index') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
