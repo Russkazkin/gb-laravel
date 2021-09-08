@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ParserController;
+use App\Http\Controllers\Admin\SourceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
@@ -23,6 +24,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::patch('/user/{user}/admin', [UserController::class, 'admin'])->name('user.admin')->middleware(['admin', 'super']);
     Route::resource('news', AdminNewsController::class)->middleware(['admin']);
     Route::resource('category', AdminCategoryController::class)->middleware(['admin']);
+    Route::resource('source', SourceController::class)->middleware(['admin']);
     Route::resource('dashboard', DashboardController::class)->parameters(['dashboard' => 'user']);
     Route::get('/parser', ParserController::class)->name('parser');
 });

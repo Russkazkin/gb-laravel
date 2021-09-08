@@ -22,10 +22,11 @@ class DatabaseSeeder extends Seeder
         Category::factory(5)->create();
         User::factory(50)->create()->each(function (User $user){
             $user->news()->saveMany(News::factory(random_int(1, 3))->make());
-            $user->news()->saveMany(Source::factory(random_int(0, 2))->make());
+            //$user->news()->saveMany(Source::factory(random_int(0, 2))->make());
         });
         News::all()->each(function (News $news) {
             $news->categories()->sync(Category::all()->random(random_int(1, 4)));
         });
+        $this->call(SourceSeeder::class);
     }
 }

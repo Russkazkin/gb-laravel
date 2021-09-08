@@ -17,7 +17,7 @@ class CreateSourcesTable extends Migration
             $table->id();
 
             $table->string('url')->comment('Source URL');
-            $table->text('description')->comment('Source description');
+            $table->text('description')->nullable()->comment('Source description');
 
             $table->foreignId('user_id')->constrained();
 
